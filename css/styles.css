@@ -1,0 +1,604 @@
+/* =========================================================================
+   ვებ-პროგრამირების კურსი — გაზიარებული დიზაინ-სისტემა
+   მეტაფორა: ინჟინრის სამუშაო მაგიდა / ხედვა-გეგმა (blueprint).
+   მარცხნივ — გეგმის სარჩევი (ღრმა ლურჯი ფონი, თეთრ-ცისფერი ხაზები).
+   მარჯვნივ — გეგმის ფურცელი (ღია ქაღალდის ფონი, მუქი მელნისფერი ტექსტი).
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* --- ფერები: ღრმა blueprint ბლოკი --- */
+  --bp-deep:      #0F2A4A;
+  --bp-mid:       #163C63;
+  --bp-line:      #8FC1E3;
+  --bp-line-dim:  #4E7699;
+
+  /* --- ფერები: ქაღალდის ბლოკი --- */
+  --paper:        #F4F7FA;
+  --paper-raised: #FFFFFF;
+  --ink:          #16232E;
+  --ink-soft:     #4B5C6B;
+  --rule:         #C7D4DD;
+
+  /* --- აქცენტები --- */
+  --amber:        #F2A73B;
+  --amber-ink:    #4A2E00;
+  --coral:        #E85D4C;
+  --moss:         #3F8F5F;
+
+  /* --- ტიპოგრაფია --- */
+  --font-display: 'Noto Serif Georgian', serif;
+  --font-body:    'Noto Sans Georgian', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Noto Sans Georgian', monospace;
+
+  /* --- განლაგება --- */
+  --sidebar-w: 320px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+}
+
+a { color: inherit; }
+
+::selection { background: var(--amber); color: var(--amber-ink); }
+
+/* focus visibility everywhere */
+a:focus-visible, button:focus-visible, summary:focus-visible,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* =========================================================================
+   SIDEBAR — გეგმის სარჩევი
+   ========================================================================= */
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  background: var(--bp-deep);
+  color: var(--bp-line);
+  background-image:
+    linear-gradient(var(--bp-mid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bp-mid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}
+
+.sidebar__head {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--bp-line-dim);
+  background: linear-gradient(180deg, rgba(15,42,74,0.96), rgba(15,42,74,0.88));
+}
+
+.sidebar__kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  margin: 0 0 6px;
+}
+
+.sidebar__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.25;
+  margin: 0;
+  color: #EAF3FA;
+}
+
+.sidebar__sub {
+  font-size: 13px;
+  color: var(--bp-line);
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+.sidebar__block-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+  padding: 18px 24px 6px;
+  background: rgba(15,42,74,0.9);
+}
+
+.meeting-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px 24px;
+}
+
+.meeting-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  text-align: start;
+  background: transparent;
+  border: none;
+  color: var(--bp-line);
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.meeting-item:hover { background: rgba(143, 193, 227, 0.12); }
+
+.meeting-item[aria-current="true"] {
+  background: rgba(242, 167, 59, 0.16);
+  color: #FFF3DE;
+}
+
+.meeting-item[aria-current="true"] .meeting-item__num {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.meeting-item__num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--bp-line-dim);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--bp-line);
+  margin-top: 1px;
+}
+
+.meeting-item__text { flex: 1; min-width: 0; }
+
+.meeting-item__title { display: block; }
+
+.meeting-item__type {
+  display: inline-block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: var(--bp-line-dim);
+}
+
+.meeting-item.is-locked { opacity: 0.55; cursor: default; }
+.meeting-item.is-locked:hover { background: transparent; }
+
+/* =========================================================================
+   MAIN — გეგმის ფურცელი
+   ========================================================================= */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.sheet {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 40px 96px;
+}
+
+/* რეგისტრაციის ნიშნები, როგორც ტექნიკურ ნახაზებზე — მიუთითებს ფურცლის კუთხეებზე */
+.sheet::before, .sheet::after,
+.sheet-mark-tl, .sheet-mark-tr {
+  content: "";
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border-color: var(--rule);
+  pointer-events: none;
+}
+.sheet::before {
+  top: 22px; left: calc(var(--sidebar-w) + 22px);
+  border-top: 2px solid var(--rule); border-left: 2px solid var(--rule);
+}
+.sheet::after {
+  top: 22px; right: 22px;
+  border-top: 2px solid var(--rule); border-right: 2px solid var(--rule);
+}
+
+.meeting-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 20px;
+  margin-bottom: 32px;
+}
+
+.meeting-header__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.meeting-header__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.2;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+
+.meeting-header__meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.meeting-header__meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* --- სექციები --- */
+
+.section { margin: 40px 0; }
+
+.section__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 16px;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.section__title small {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.prose { line-height: 1.75; font-size: 16px; color: var(--ink); max-width: 68ch; }
+.prose p { margin: 0 0 14px; }
+.prose strong { color: var(--ink); }
+
+/* ანალოგიის ყუთი */
+.callout {
+  border-left: 3px solid var(--amber);
+  background: #FFF7E9;
+  padding: 16px 20px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 20px 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.callout__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--amber-ink);
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* --- აჟენდის ვადები (60 წუთი) --- */
+
+.agenda {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 8px 0 0;
+}
+
+.agenda__cell {
+  background: var(--paper-raised);
+  padding: 14px 12px;
+}
+
+.agenda__time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--moss);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.agenda__label { font-size: 13px; line-height: 1.4; }
+
+@media (max-width: 720px) {
+  .agenda { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- კოდის ბლოკები --- */
+
+.code-block {
+  background: var(--bp-deep);
+  color: #DCEEFB;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  overflow-x: auto;
+  margin: 12px 0;
+  white-space: pre;
+}
+
+.code-block .tag  { color: #8FC1E3; }
+.code-block .attr { color: var(--amber); }
+.code-block .str  { color: #B7E3B0; }
+.code-block .cmt  { color: #6E90AC; font-style: italic; }
+
+/* --- Try-it-yourself სენდბოქსი --- */
+
+.sandbox {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.sandbox__tabs {
+  display: flex;
+  background: var(--paper-raised);
+  border-bottom: 1px solid var(--rule);
+}
+
+.sandbox__tab {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--rule);
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.sandbox__tab[aria-selected="true"] {
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.sandbox__panes { display: grid; grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 760px) { .sandbox__panes { grid-template-columns: 1fr; } }
+
+.sandbox__editor-col { border-right: 1px solid var(--rule); display: flex; flex-direction: column; }
+@media (max-width: 760px) { .sandbox__editor-col { border-right: none; border-bottom: 1px solid var(--rule); } }
+
+.sandbox__editor {
+  width: 100%;
+  min-height: 220px;
+  border: none;
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 14px;
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.sandbox__preview-col { display: flex; flex-direction: column; background: var(--paper-raised); }
+
+.sandbox__preview-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sandbox__preview-bar span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+}
+.btn:hover { background: #263542; }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.btn--ghost:hover { background: var(--paper); }
+
+.sandbox__frame {
+  flex: 1;
+  min-height: 220px;
+  border: none;
+  width: 100%;
+  background: #fff;
+}
+
+/* --- სავარჯიშოები --- */
+
+.exercise {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  background: var(--paper-raised);
+}
+
+.exercise > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 15px;
+}
+.exercise > summary::-webkit-details-marker { display: none; }
+.exercise > summary::before { content: "▸"; color: var(--ink-soft); transition: transform .15s; }
+.exercise[open] > summary::before { transform: rotate(90deg); }
+
+.exercise__level {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #fff;
+}
+.exercise__level--easy   { background: var(--moss); }
+.exercise__level--medium { background: var(--amber); color: var(--amber-ink); }
+.exercise__level--hard   { background: var(--coral); }
+
+.exercise__body { padding: 0 18px 18px; font-size: 14.5px; line-height: 1.7; }
+.exercise__hint {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  border-top: 1px dashed var(--rule);
+  padding-top: 10px;
+}
+
+/* --- ქვიზი --- */
+
+.quiz-q {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: var(--paper-raised);
+}
+
+.quiz-q__prompt { font-weight: 600; margin: 0 0 10px; font-size: 15px; }
+
+.quiz-q__options { display: flex; flex-direction: column; gap: 8px; }
+
+.quiz-q__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+}
+.quiz-q__option:hover { background: var(--paper); }
+.quiz-q__option input { margin-top: 3px; }
+
+.quiz-q.is-correct   { border-color: var(--moss); }
+.quiz-q.is-correct   .quiz-q__option--right { background: #EAF6ED; border-color: var(--moss); }
+.quiz-q.is-incorrect .quiz-q__option--right { background: #EAF6ED; border-color: var(--moss); }
+.quiz-q.is-incorrect .quiz-q__option--picked-wrong { background: #FDECEA; border-color: var(--coral); }
+
+.quiz-q__explain {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+  display: none;
+}
+.quiz-q.answered .quiz-q__explain { display: block; }
+
+.quiz__footer { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+.quiz__score { font-family: var(--font-mono); font-size: 14px; }
+
+/* --- საშინაო დავალება --- */
+
+.homework {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  margin-top: 40px;
+  background: #EFEDE3;
+}
+.homework__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+}
+.homework p { margin: 0; line-height: 1.7; font-size: 15px; }
+
+/* --- "მალე დაემატება" მდგომარეობა --- */
+
+.coming-soon {
+  padding: 80px 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.coming-soon__num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.coming-soon__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.coming-soon__note { max-width: 46ch; margin: 0 auto; line-height: 1.7; }
+
+/* --- მობილურზე ჩაშლადი სარჩევი --- */
+
+.mobile-topbar { display: none; }
+
+@media (max-width: 880px) {
+  body { flex-direction: column; }
+  .sidebar {
+    position: relative;
+    height: auto;
+    width: 100%;
+    max-height: 60vh;
+  }
+  .main { height: auto; }
+  .mobile-topbar {
+    display: none;
+  }
+  .sheet { padding: 32px 20px 64px; }
+  .sheet::before, .sheet::after { display: none; }
+}
