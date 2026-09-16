@@ -10,7 +10,7 @@
 const COURSE_MEETINGS = [
   // ---------------- ბლოკი I: HTML & CSS (შეხვედრები 1-18) ----------------
   { id: 1,  block: "html-css", type: "theory",   title: "შესავალი HTML-ში",                         available: true, file: "js/meetings/meeting-01.js" },
-  { id: 2,  block: "html-css", type: "theory",   title: "HTML-ის ელემენტები I — ტექსტი და სათაურები" },
+  { id: 2,  block: "html-css", type: "theory",   title: "HTML-ის ელემენტები I — ტექსტი და სათაურები", available: true, file: "js/meetings/meeting-02.js" },
   { id: 3,  block: "html-css", type: "theory",   title: "ბმულები და სიები" },
   { id: 4,  block: "html-css", type: "theory",   title: "სურათები და მულტიმედია" },
   { id: 5,  block: "html-css", type: "theory",   title: "ცხრილები" },
