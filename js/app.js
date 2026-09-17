@@ -17,6 +17,15 @@ function escapeHtml(str) {
     .replaceAll(">", "&gt;");
 }
 
+/* Quiz text (prompts/options/explanations) is rendered through this instead
+   of raw innerHTML: everything is escaped first, so a literal tag mentioned
+   as an answer (e.g. "<body>") always shows as text instead of being parsed
+   as real markup. Wrap such mentions in the source data with backticks —
+   `<body>` — to render them in a <code> style. */
+function mdInline(str) {
+  return escapeHtml(str).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
 /* ---------------------------------------------------------------------- */
 /* სარჩევის აგება                                                          */
 /* ---------------------------------------------------------------------- */
@@ -265,16 +274,16 @@ function createSandbox(container, initial) {
 function createQuiz(container, questions) {
   container.innerHTML = questions.map((q, qi) => `
     <div class="quiz-q" data-qi="${qi}">
-      <p class="quiz-q__prompt">${qi + 1}. ${q.prompt}</p>
+      <p class="quiz-q__prompt">${qi + 1}. ${mdInline(q.prompt)}</p>
       <div class="quiz-q__options">
         ${q.options.map((opt, oi) => `
           <label class="quiz-q__option" data-oi="${oi}">
             <input type="radio" name="quiz-${container.id}-${qi}" value="${oi}">
-            <span>${opt}</span>
+            <span>${mdInline(opt)}</span>
           </label>
         `).join("")}
       </div>
-      <p class="quiz-q__explain">${q.explain}</p>
+      <p class="quiz-q__explain">${mdInline(q.explain)}</p>
     </div>
   `).join("") + `
     <div class="quiz__footer">
