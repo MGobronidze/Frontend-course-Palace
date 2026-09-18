@@ -238,7 +238,7 @@ function createSandbox(container, initial) {
           <span>შედეგი</span>
           <button class="btn" type="button">▶ გაშვება</button>
         </div>
-        <iframe class="sandbox__frame" title="ცოცხალი გადახედვა" sandbox="allow-scripts"></iframe>
+        <iframe class="sandbox__frame" title="ცოცხალი გადახედვა" sandbox="allow-scripts allow-forms"></iframe>
       </div>
     </div>
   `;
@@ -261,7 +261,19 @@ function createSandbox(container, initial) {
       h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure, table { margin: 0 0 12px; }
       li { margin-left: 20px; }
       ${state.css}
-    </style></head><body>${state.html}<script>${state.js}<\/script></body></html>`;
+    </style></head><body>${state.html}<script>
+      // ეს დაწერილი არ არის მოსწავლის კოდში — ეხმარება Try-it-yourself
+      // დემოს, ფორმების გაგზავნისას გვერდი ცარიელი არ დარჩეს.
+      document.querySelectorAll("form").forEach(function (f) {
+        f.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var note = document.createElement("div");
+          note.textContent = "✅ ფორმა \\"გაიგზავნა\\" — ეს მხოლოდ დემოა, რეალურად სერვერზე არაფერი იგზავნება.";
+          note.style.cssText = "margin-top:12px;padding:10px 14px;background:#EAF6ED;border:1px solid #3F8F5F;border-radius:6px;font-size:13.5px;";
+          f.insertAdjacentElement("afterend", note);
+        });
+      });
+    <\/script><script>${state.js}<\/script></body></html>`;
     frame.srcdoc = doc;
   }
 
