@@ -122,13 +122,13 @@ function renderMeeting(c) {
 
   const agendaHtml = c.agenda.map((a) => `
     <div class="agenda__cell">
-      <span class="agenda__time">${a.time}</span>
-      <span class="agenda__label">${a.label}</span>
+      <span class="agenda__time">${mdInline(a.time)}</span>
+      <span class="agenda__label">${mdInline(a.label)}</span>
     </div>
   `).join("");
 
   const codeBlocksHtml = (c.demo.codeBlocks || []).map((b) => `
-    <p class="prose"><strong>${b.label}</strong></p>
+    <p class="prose"><strong>${mdInline(b.label)}</strong></p>
     <div class="code-block">${escapeHtml(b.code)}</div>
     ${b.note ? `<p class="prose" style="color:var(--ink-soft); font-size:14px;">${b.note}</p>` : ""}
   `).join("");
@@ -255,7 +255,13 @@ function createSandbox(container, initial) {
   }
 
   function run() {
-    const doc = `<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:sans-serif;margin:12px;}${state.css}</style></head><body>${state.html}<script>${state.js}<\/script></body></html>`;
+    const doc = `<!doctype html><html><head><meta charset="utf-8"><style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: sans-serif; color: #16232E; padding: 14px; }
+      h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, figure, table { margin: 0 0 12px; }
+      li { margin-left: 20px; }
+      ${state.css}
+    </style></head><body>${state.html}<script>${state.js}<\/script></body></html>`;
     frame.srcdoc = doc;
   }
 

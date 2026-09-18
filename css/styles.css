@@ -368,6 +368,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   border-radius: var(--radius-md);
   overflow: hidden;
   margin-top: 14px;
+ 
 }
 
 .sandbox__tabs {
@@ -393,7 +394,10 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   font-weight: 600;
 }
 
-.sandbox__panes { display: grid; grid-template-columns: 1fr 1fr; }
+.sandbox__panes {  
+  display: flex;
+  flex-direction: column; 
+}
 
 @media (max-width: 760px) { .sandbox__panes { grid-template-columns: 1fr; } }
 

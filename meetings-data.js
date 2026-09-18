@@ -13,7 +13,7 @@ const COURSE_MEETINGS = [
   { id: 2,  block: "html-css", type: "theory",   title: "HTML-ის ელემენტები I — ტექსტი და სათაურები", available: true, file: "js/meetings/meeting-02.js" },
   { id: 3,  block: "html-css", type: "theory",   title: "ბმულები და სიები", available: true, file: "js/meetings/meeting-03.js" },
   { id: 4,  block: "html-css", type: "theory",   title: "სურათები და მულტიმედია", available: true, file: "js/meetings/meeting-04.js" },
-  { id: 5,  block: "html-css", type: "theory",   title: "ცხრილები" , available: true, file: "js/meetings/meeting-05.js" } ,
+  { id: 5,  block: "html-css", type: "theory",   title: "ცხრილები", available: true, file: "js/meetings/meeting-05.js" },
   { id: 6,  block: "html-css", type: "theory",   title: "ფორმები HTML-ში" },
   { id: 7,  block: "html-css", type: "revision", title: "გამეორება + მინი-პროექტი: „ჩემი ვიზიტ-ბარათი“ (მხოლოდ HTML)" },
   { id: 8,  block: "html-css", type: "theory",   title: "შესავალი CSS-ში — სელექტორები და სინტაქსი" },
