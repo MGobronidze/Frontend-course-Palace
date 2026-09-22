@@ -68,7 +68,7 @@ window.MEETING_CONTENT[2] = {
 </p>
 <hr>
 <blockquote>
-  საუკეთესო თავგადასავალი, რაც კი მინდვინახავს!
+  საუკეთესო თავგადასავალი, რაც კი თავს გადამხდენია!
 </blockquote>`,
     css: `body {
   font-family: sans-serif;
