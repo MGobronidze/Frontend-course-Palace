@@ -134,7 +134,7 @@ th, td { border: 1px solid #C7D4DD; padding: 6px 10px; }`,
 
   quiz: [
     {
-      prompt: "რომელი ტეგი გამოვიყენოთ სურათის ჩასასმელად, ალტერნატიული ტექსტით ერთად?",
+      prompt: "რომელი ტეგი გამოვიყენოთ სურათის ჩასასმელად, ალტერნატიულ ტექსტთან ერთად?",
       options: ["`<picture alt>`", "`<img src alt>`", "`<image source>`", "`<figure src>`"],
       correctIndex: 1,
       explain: "`<img>` არის ერთადერთი სწორი ტეგი სურათისთვის; `src` მიუთითებს ფაილზე, `alt` — ალტერნატიულ აღწერაზე.",
@@ -143,10 +143,10 @@ th, td { border: 1px solid #C7D4DD; padding: 6px 10px; }`,
       prompt: "რომელი წყვილი ტეგი შეიცავს ცხრილის ერთ მწკრივს?",
       options: ["`<table>`/`<tr>`", "`<tr>` (მარტო)", "`<td>`/`<th>`", "`<row>`/`<cell>`"],
       correctIndex: 1,
-      explain: "`<tr>` (table row) წარმოადგენს ერთ მთლიან მწკრივს — მისი შიგნით კი დგას `<th>` ან `<td>` უჯრედები.",
+      explain: "`<tr>` (table row) წარმოადგენს ერთ მთლიან მწკრივს — მის შიგნით კი დგას `<th>` ან `<td>` უჯრედები.",
     },
     {
-      prompt: "თუ გინდა, რომ დაწკაპუნება წარწერაზეც აქტიურებდეს checkbox-ს, რა უნდა გააკეთო?",
+      prompt: "თუ გინდა, რომ დაწკაპუნება წარწერაზეც აქტიურდებოდეს checkbox-ზე, რა უნდა გააკეთო?",
       options: [
         "`<input>`-ს დავამატო `name` ატრიბუტი",
         "`<label>`-ის `for` შევუსაბამო `<input>`-ის `id`-ს",
@@ -163,7 +163,7 @@ th, td { border: 1px solid #C7D4DD; padding: 6px 10px; }`,
       explain: "`<ol>` (ordered list) ავტომატურად ნომრავს პუნქტებს — შესაბამისია, როცა ნაბიჯების რიგს მნიშვნელობა აქვს.",
     },
     {
-      prompt: "რომელი ხუთივე ეს ტეგი (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`, `<title>`) ერთად რას ქმნის?",
+      prompt: "ეს ხუთი ტეგი (`<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`, `<title>`) ერთად რას ქმნის?",
       options: [
         "ცხრილს",
         "ყოველი HTML დოკუმენტის საბაზისო სტრუქტურას",
@@ -175,5 +175,5 @@ th, td { border: 1px solid #C7D4DD; padding: 6px 10px; }`,
     },
   ],
 
-  homework: `დაასრულე შენი „ჩემ ვიზიტ-ბარათი“ ცალკე ფაილში — <code>card.html</code> — და დარწმუნდი, რომ მას აქვს: ერთი <code>&lt;h1&gt;</code>, მინიმუმ სამი <code>&lt;p&gt;</code>, ერთი <code>&lt;img&gt;</code> ზუსტი <code>alt</code>-ით, ერთი <code>&lt;ul&gt;</code> ან <code>&lt;ol&gt;</code> სია, ერთი <code>&lt;table&gt;</code> და ერთი სამუშაო <code>&lt;form&gt;</code>. მომდევნო შეხვედრიდან ვიწყებთ CSS-ს — მაშინ ამ იგივე ვიზიტ-ბარათს სილამაზესაც შევძენთ!`,
+  homework: `დაასრულე შენი „ჩემი ვიზიტ-ბარათი“ ცალკე ფაილში — <code>card.html</code> — და დარწმუნდი, რომ მას აქვს: ერთი <code>&lt;h1&gt;</code>, მინიმუმ სამი <code>&lt;p&gt;</code>, ერთი <code>&lt;img&gt;</code> ზუსტი <code>alt</code>-ით, ერთი <code>&lt;ul&gt;</code> ან <code>&lt;ol&gt;</code> სია, ერთი <code>&lt;table&gt;</code> და ერთი სამუშაო <code>&lt;form&gt;</code>. მომდევნო შეხვედრიდან ვიწყებთ CSS-ს — და ვიზიტ-ბარათს სილამაზესაც შევძენთ!`,
 };
